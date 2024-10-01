@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TaskService } from '../task.service';
 import { Task } from '../../entities/task';
 import { RouterLink } from '@angular/router';
@@ -56,6 +56,7 @@ export class TaskListComponent implements OnInit {
     this.filter = filter;
     this.applyFilter();
   }
+
   onComplete(task): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -75,8 +76,32 @@ export class TaskListComponent implements OnInit {
 
   complete(task): void {
     const updatedTask = { ...task, completed: true };
-    this.apiService.updateTask(updatedTask).subscribe(() => {
-      this.loadTasks(); // Recargar las tareas para reflejar el cambio
-    });
+    this.apiService.updateTask(updatedTask).subscribe(
+      {
+        next: () => {
+          this.loadTasks(); // Recargar las tareas para reflejar el cambio
+          this._snackBar.open(
+            'Tarea actualizada con exito',
+            null,
+            {
+              duration: 5000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+        },
+        error: (error) => {
+          this._snackBar.open(
+            error?.message || 'Something went wrong, please try again.',
+            null,
+            {
+              duration: 5000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+        }
+      }
+
+    );
   }
+
 }

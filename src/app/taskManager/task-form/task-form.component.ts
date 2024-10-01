@@ -12,6 +12,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipEditedEvent, MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { atLeastOneSkill, uniqueNameValidator } from '../../common/validators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-task-form',
@@ -39,12 +40,13 @@ export class TaskFormComponent implements OnInit {
     private _changeDetectorRef: ChangeDetectorRef,
     private fb: FormBuilder,
     private apiService: TaskService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar,
   ) {
     this.taskForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
       deadline: ['', Validators.required],
-      persons: this.fb.array([],uniqueNameValidator)
+      persons: this.fb.array([], uniqueNameValidator)
     });
   }
 
@@ -110,18 +112,37 @@ export class TaskFormComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.taskForm.updateValueAndValidity();
-    // this.taskForm.markAllAsTouched();
-    // this._changeDetectorRef.markForCheck();
-    // console.log('this.taskForm.getRawValue()', this.taskForm);
-    // return;
     if (this.taskForm.valid) {
       const newTask: Task = this.taskForm.value;
-      this.apiService.addTask(newTask).subscribe(() => {
-        this.router.navigate(['/task-list']);
-      });
+      this.apiService.addTask(newTask).subscribe(
+        {
+          next: () => {
+            this.goToList();
+            this._snackBar.open(
+              'Tarea creada con exito',
+              null,
+              {
+                duration: 5000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+              });
+          },
+          error: (error) => {
+            this._snackBar.open(
+              error?.message || 'Something went wrong, please try again.',
+              null,
+              {
+                duration: 5000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+              });
+          }
+        }
+      );
     }
   }
-
+  goToList(): void {
+    this.router.navigate(['/task-list']);
+  }
 
 }

@@ -49,8 +49,7 @@
           ]
         }
       ],
-      "id": "7fe5",
-      "completed": true
+      "id": "7fe5"
     },
     {
       "name": "ejercicio practico2",
@@ -77,7 +76,8 @@
           ]
         }
       ],
-      "id": "a7f9"
+      "id": "a7f9",
+      "completed": true
     },
     {
       "name": "fqrwgwerg",
@@ -89,12 +89,25 @@
           "skills": [
             "wferfw",
             "erf",
-            "wer",
-            "f"
+            "wer"
           ]
         }
       ],
       "id": "1aea"
+    },
+    {
+      "id": "6615",
+      "name": "xfbgfg",
+      "deadline": "2024-10-16T04:00:00.000Z",
+      "persons": [
+        {
+          "fullName": "fgdbg",
+          "age": 34,
+          "skills": [
+            "dfb"
+          ]
+        }
+      ]
     }
   ]
 }

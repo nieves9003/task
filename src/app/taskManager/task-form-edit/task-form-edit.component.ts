@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { uniqueNameValidator, atLeastOneSkill } from '../../common/validators';
 import { Person } from '../../entities/person';
 import { TaskService } from '../task.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-task-form-edit',
@@ -42,7 +43,8 @@ export class TaskFormEditComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private apiService: TaskService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar,
   ) {
     this.taskForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
@@ -119,9 +121,34 @@ export class TaskFormEditComponent implements OnInit {
   onSubmit() {
     if (this.taskForm.valid) {
       const updatedTask: Task = { ...this.taskForm.value, id: this.taskId };
-      this.apiService.updateTask(updatedTask).subscribe(() => {
-        this.router.navigate(['/task-list']);
-      });
+      this.apiService.updateTask(updatedTask).subscribe(
+        {
+          next: () => {
+            this.goToList();
+            this._snackBar.open(
+              'Tarea actualizada con exito',
+              null,
+              {
+                duration: 5000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+              });
+          },
+          error(error) {
+            this._snackBar.open(
+              error?.message || 'Something went wrong, please try again.',
+              null,
+              {
+                duration: 5000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+              });
+          },
+        }
+      );
     }
+  }
+  goToList(): void {
+    this.router.navigate(['/task-list']);
   }
 }

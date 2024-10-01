@@ -4,6 +4,7 @@ export function atLeastOneSkill(control: AbstractControl): ValidationErrors | nu
   const skills = control.value as string[];
   return skills.length > 0 ? null : { atLeastOneSkill: true };
 }
+
 export const uniqueNameValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const persons = control.value as { fullName: string }[];
   const names = persons.map(person => person.fullName);
