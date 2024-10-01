@@ -1,0 +1,113 @@
+{
+  "tasks": [
+    {
+      "name": "Tarea de ejemplo",
+      "deadline": "2024-10-01",
+      "persons": [
+        {
+          "fullName": "Juan Pérezsd asdf sadfa sfa ",
+          "age": 30,
+          "skills": [
+            "Angular",
+            "pepoto perez",
+            "sfdg sdfg",
+            "sdfg",
+            "sdfg s",
+            "dfg",
+            "sdf",
+            "g sdf",
+            "g",
+            "sdb dgfb",
+            "n grpoinrg",
+            "fijnwtginfg"
+          ]
+        },
+        {
+          "fullName": "sdfgdfbgt",
+          "age": 45,
+          "skills": [
+            "fgsdfg",
+            "sdfg",
+            "sdf",
+            "g"
+          ]
+        }
+      ],
+      "id": "1",
+      "completed": true
+    },
+    {
+      "name": "sdfvsdfvsdfv",
+      "deadline": "2024-10-17T04:00:00.000Z",
+      "persons": [
+        {
+          "fullName": "sdvsdfvsdfv",
+          "age": 343,
+          "skills": [
+            "sdfvsf",
+            "sdfvsdfv"
+          ]
+        }
+      ],
+      "id": "7fe5"
+    },
+    {
+      "name": "ejercicio practico2",
+      "deadline": "2024-10-17T04:00:00.000Z",
+      "persons": [
+        {
+          "fullName": "jorge1",
+          "age": 341,
+          "skills": [
+            "sfisd",
+            "sdf",
+            "dfg",
+            "1"
+          ]
+        },
+        {
+          "fullName": "jorge21",
+          "age": 431,
+          "skills": [
+            "sdfoibgjb",
+            "d",
+            "gf d",
+            "1"
+          ]
+        }
+      ],
+      "id": "a7f9",
+      "completed": true
+    },
+    {
+      "name": "fqrwgwerg",
+      "deadline": "2024-10-16T04:00:00.000Z",
+      "persons": [
+        {
+          "fullName": "ergwer",
+          "age": 23452,
+          "skills": [
+            "wferfw",
+            "erf",
+            "wer"
+          ]
+        }
+      ],
+      "id": "1aea"
+    },
+    {
+      "id": "6615",
+      "name": "xfbgfg",
+      "deadline": "2024-10-16T04:00:00.000Z",
+      "persons": [
+        {
+          "fullName": "fgdbg",
+          "age": 34,
+          "skills": [
+            "dfb"
+          ]
+        }
+      ]
+    }
+  ]
+}

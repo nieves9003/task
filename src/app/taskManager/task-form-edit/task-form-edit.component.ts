@@ -1,22 +1,23 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { CommonModule, NgFor } from '@angular/common';
-import { FormGroup, FormBuilder, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
-import { TaskService } from '../task.service';
-import { Task } from '../../entities/task';
-import { Router } from '@angular/router';
+import { NgFor, CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipEditedEvent, MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
-import { atLeastOneSkill, uniqueNameValidator } from '../../common/validators';
+import { MatInputModule } from '@angular/material/input';
+import { Task } from '../../entities/task';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { ActivatedRoute, Router } from '@angular/router';
+import { uniqueNameValidator, atLeastOneSkill } from '../../common/validators';
+import { Person } from '../../entities/person';
+import { TaskService } from '../task.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-task-form',
-  templateUrl: './task-form.component.html',
+  selector: 'app-task-form-edit',
+  templateUrl: './task-form-edit.component.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -29,15 +30,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatNativeDateModule,
     MatChipsModule,
     MatIconModule,
-    CommonModule,],
+    CommonModule,
+  ],
 })
-export class TaskFormComponent implements OnInit {
+export class TaskFormEditComponent implements OnInit {
   taskForm: FormGroup;
+  taskId: number;
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private apiService: TaskService,
     private router: Router,
@@ -51,18 +54,22 @@ export class TaskFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addPerson();
+    this.taskId = this.route.snapshot.params['id'];
+    this.apiService.getTask(this.taskId).subscribe(task => {
+      this.taskForm.patchValue(task);
+      task.persons.forEach(person => this.addPerson(person));
+    });
   }
 
   get persons() {
     return this.taskForm.get('persons') as FormArray;
   }
 
-  addPerson() {
+  addPerson(person?: Person) {
     const personForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.minLength(5)]],
-      age: ['', [Validators.required, Validators.min(18)]],
-      skills: [[], [Validators.required, atLeastOneSkill]],
+      fullName: [person?.fullName || '', [Validators.required, Validators.minLength(5)]],
+      age: [person?.age || '', [Validators.required, Validators.min(18)]],
+      skills: [person?.skills || [], [Validators.required, atLeastOneSkill]],
     });
     this.persons.push(personForm);
   }
@@ -113,13 +120,13 @@ export class TaskFormComponent implements OnInit {
 
   onSubmit() {
     if (this.taskForm.valid) {
-      const newTask: Task = this.taskForm.value;
-      this.apiService.addTask(newTask).subscribe(
+      const updatedTask: Task = { ...this.taskForm.value, id: this.taskId };
+      this.apiService.updateTask(updatedTask).subscribe(
         {
           next: () => {
             this.goToList();
             this._snackBar.open(
-              'Tarea creada con exito',
+              'Tarea actualizada con exito',
               null,
               {
                 duration: 5000,
@@ -127,7 +134,7 @@ export class TaskFormComponent implements OnInit {
                 verticalPosition: 'top',
               });
           },
-          error: (error) => {
+          error(error) {
             this._snackBar.open(
               error?.message || 'Something went wrong, please try again.',
               null,
@@ -136,7 +143,7 @@ export class TaskFormComponent implements OnInit {
                 horizontalPosition: 'center',
                 verticalPosition: 'top',
               });
-          }
+          },
         }
       );
     }
@@ -144,5 +151,4 @@ export class TaskFormComponent implements OnInit {
   goToList(): void {
     this.router.navigate(['/task-list']);
   }
-
 }
