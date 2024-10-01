@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { TaskService } from '../task.service';
 import { Task } from '../../entities/task';
 import { RouterLink } from '@angular/router';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../common/confirmation-dialog/confirmation-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task-list',
@@ -10,6 +15,9 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [
     RouterLink,
+    MatSnackBarModule,
+    MatButtonToggleModule,
+    FormsModule,
     CommonModule
   ],
 })
@@ -19,6 +27,8 @@ export class TaskListComponent implements OnInit {
   filter: string = 'all';
 
   constructor(private apiService: TaskService,
+    private _snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -46,5 +56,27 @@ export class TaskListComponent implements OnInit {
     this.filter = filter;
     this.applyFilter();
   }
-  onComplete(): void { }
+  onComplete(task): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Confirmación',
+        message: '¿Estás seguro de que deseas realizar esta acción?',
+        icon: 'warning',
+        iconColor: 'red'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.complete(task);
+      }
+    });
+  }
+
+  complete(task): void {
+    const updatedTask = { ...task, completed: true };
+    this.apiService.updateTask(updatedTask).subscribe(() => {
+      this.loadTasks(); // Recargar las tareas para reflejar el cambio
+    });
+  }
 }

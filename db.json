@@ -5,7 +5,7 @@
       "deadline": "2024-10-01",
       "persons": [
         {
-          "fullName": "Juan Pérez",
+          "fullName": "Juan Pérezsd asdf sadfa sfa ",
           "age": 30,
           "skills": [
             "Angular",
@@ -16,7 +16,10 @@
             "dfg",
             "sdf",
             "g sdf",
-            "g"
+            "g",
+            "sdb dgfb",
+            "n grpoinrg",
+            "fijnwtginfg"
           ]
         },
         {
@@ -30,7 +33,8 @@
           ]
         }
       ],
-      "id": "1"
+      "id": "1",
+      "completed": true
     },
     {
       "id": "7fe5",
