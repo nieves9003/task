@@ -33,7 +33,7 @@
       <div class="flex w-full justify-end mt-2 gap-2">
         <button *ngIf="!task.completed" class="bg-green-500 text-white px-4 py-2 rounded"
           (click)="onComplete(task)">Completar</button>
-        <button *ngIf="!task.completed" class="bg-blue-500 text-white px-4 py-2 rounded" [routerLink]="['/edit',task.id]"
+        <button *ngIf="!task.completed" color="primary"  class="bg-blue-500 text-white px-4 py-2 rounded" [routerLink]="['/edit',task.id]"
           routerLinkActive="router-link-active">Editar</button>
       </div>
     </div>

@@ -60,7 +60,7 @@ export class TaskListComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         title: 'Confirmación',
-        message: '¿Estás seguro de que deseas realizar esta acción?',
+        message: '¿Estás seguro de que deseas completar esta tarea?',
         icon: 'warning',
         iconColor: 'red'
       }

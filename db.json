@@ -37,7 +37,6 @@
       "completed": true
     },
     {
-      "id": "7fe5",
       "name": "sdfvsdfvsdfv",
       "deadline": "2024-10-17T04:00:00.000Z",
       "persons": [
@@ -49,7 +48,53 @@
             "sdfvsdfv"
           ]
         }
-      ]
+      ],
+      "id": "7fe5",
+      "completed": true
+    },
+    {
+      "name": "ejercicio practico2",
+      "deadline": "2024-10-17T04:00:00.000Z",
+      "persons": [
+        {
+          "fullName": "jorge1",
+          "age": 341,
+          "skills": [
+            "sfisd",
+            "sdf",
+            "dfg",
+            "1"
+          ]
+        },
+        {
+          "fullName": "jorge21",
+          "age": 431,
+          "skills": [
+            "sdfoibgjb",
+            "d",
+            "gf d",
+            "1"
+          ]
+        }
+      ],
+      "id": "a7f9"
+    },
+    {
+      "name": "fqrwgwerg",
+      "deadline": "2024-10-16T04:00:00.000Z",
+      "persons": [
+        {
+          "fullName": "ergwer",
+          "age": 23452,
+          "skills": [
+            "wferfw",
+            "erf",
+            "wer",
+            "f"
+          ]
+        }
+      ],
+      "id": "1aea"
     }
   ]
 }

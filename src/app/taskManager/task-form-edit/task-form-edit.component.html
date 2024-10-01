@@ -1,60 +1,60 @@
-<div class="task-form-container p-4">
-  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill" class="w-full mb-4">
-      <mat-label>Nombre de la Tarea</mat-label>
-      <input matInput formControlName="name">
-      <mat-error *ngIf="taskForm.get('name')!.invalid">El nombre es obligatorio y debe tener al menos 5
-        caracteres.</mat-error>
-    </mat-form-field>
+<div class="flex w-full p-4 justify-center items-start">
+  <div class="max-w-xl w-full">
+    <h2 class="text-center">Editar Tarea</h2>
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="flex flex-col">
+      <mat-form-field appearance="fill" class="w-full mb-4">
+        <mat-label>Nombre de la Tarea</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="taskForm.get('name')!.invalid">El nombre es obligatorio y debe tener al menos 5 caracteres.</mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" class="w-full mb-4">
-      <mat-label>Fecha Límite</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="deadline">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="taskForm.get('deadline')!.invalid">La fecha límite es obligatoria.</mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="fill" class="w-full mb-4">
+        <mat-label>Fecha Límite</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="deadline">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="taskForm.get('deadline')!.invalid">La fecha límite es obligatoria.</mat-error>
+      </mat-form-field>
 
-    <div formArrayName="persons">
-      <div *ngFor="let person of persons.controls; let i = index" [formGroupName]="i"
-        class="mb-4 p-4 border border-gray-300 rounded">
-        <mat-form-field appearance="fill" class="w-full mb-4">
-          <mat-label>Nombre Completo</mat-label>
-          <input matInput formControlName="fullName">
-          <mat-error *ngIf="person.get('fullName')!.invalid">El nombre es obligatorio y debe tener al menos 5
-            caracteres.</mat-error>
-        </mat-form-field>
+      <div formArrayName="persons">
+        <div *ngFor="let person of persons.controls; let i = index" [formGroupName]="i" class="mb-4 p-4 border border-gray-300 rounded">
+          <mat-form-field appearance="fill" class="w-full mb-4">
+            <mat-label>Nombre Completo</mat-label>
+            <input matInput formControlName="fullName">
+            <mat-error *ngIf="person.get('fullName')!.invalid">El nombre es obligatorio y debe tener al menos 5 caracteres.</mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="w-full mb-4">
-          <mat-label>Edad</mat-label>
-          <input matInput type="number" formControlName="age">
-          <mat-error *ngIf="person.get('age')!.invalid">La edad es obligatoria y debe ser mayor de 18 años.</mat-error>
-        </mat-form-field>
+          <mat-form-field appearance="fill" class="w-full mb-4">
+            <mat-label>Edad</mat-label>
+            <input matInput type="number" formControlName="age">
+            <mat-error *ngIf="person.get('age')!.invalid">La edad es obligatoria y debe ser mayor de 18 años.</mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="w-full mb-4">
-          <mat-label>Enter Skills</mat-label>
-          <mat-chip-grid #chipGrid aria-label="Enter Skills" formControlName="skills">
-            <mat-chip-row *ngFor="let skill of person.get('skills')!.value; let j = index"
-              (removed)="removeSkill(i, skill)" (edited)="editSkill(i, skill, $event)">
-              {{ skill }}
-              <button matChipRemove>
-                <mat-icon>cancel</mat-icon>
-              </button>
-            </mat-chip-row>
-            <input placeholder="New skill..." [matChipInputFor]="chipGrid"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-              (matChipInputTokenEnd)="addSkill(i, $event)" />
-          </mat-chip-grid>
-          <mat-error *ngIf="person.get('skills')!.hasError('atLeastOneSkill')">Debe tener al menos una
-            habilidad.</mat-error>
-        </mat-form-field>
-        <button mat-button color="warn" (click)="removePerson(i)">Eliminar Persona</button>
+          <mat-form-field appearance="fill" class="w-full mb-4">
+            <mat-label>Enter Skills</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Enter Skills" formControlName="skills">
+              <mat-chip-row *ngFor="let skill of person.get('skills')!.value; let j = index" (removed)="removeSkill(i, skill)" (edited)="editSkill(i, skill, $event)">
+                {{ skill }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              <input placeholder="New skill..." [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addSkill(i, $event)" />
+            </mat-chip-grid>
+            <mat-error *ngIf="person.get('skills')!.hasError('atLeastOneSkill')">Debe tener al menos una habilidad.</mat-error>
+          </mat-form-field>
+          <button mat-button color="warn" (click)="removePerson(i)">Eliminar Persona</button>
+        </div>
+        <mat-error *ngIf="taskForm.hasError('uniqueName', 'persons')">Los nombres de las personas no pueden repetirse.</mat-error>
       </div>
-      <mat-error *ngIf="taskForm.hasError('uniqueName', 'persons')">Los nombres de las personas no pueden
-        repetirse.</mat-error>
-    </div>
-
-    <button mat-button color="primary" (click)="addPerson()">Añadir Persona</button>
-    <button mat-raised-button color="primary" type="submit">Crear Tarea</button>
-  </form>
+      <div class="flex flex-col gap-4">
+        <div class="flex gap-4">
+          <button mat-button color="primary" (click)="addPerson()">Añadir Persona</button>
+        </div>
+        <div class="flex w-full justify-end">
+          <button mat-raised-button color="primary" type="submit">Editar</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
