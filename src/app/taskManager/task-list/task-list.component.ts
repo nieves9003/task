@@ -2,20 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../task.service';
 import { Task } from '../../entities/task';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.scss']
+  standalone: true,
+  imports: [
+    RouterLink,
+    CommonModule
+  ],
 })
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
   filter: string = 'all';
 
-  constructor(private apiService: TaskService) { }
+  constructor(private apiService: TaskService,
+  ) { }
 
   ngOnInit(): void {
     this.loadTasks();
@@ -42,4 +46,5 @@ export class TaskListComponent implements OnInit {
     this.filter = filter;
     this.applyFilter();
   }
+  onComplete(): void { }
 }

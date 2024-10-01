@@ -1,16 +1,49 @@
 {
   "tasks": [
     {
-      "id": "1",
       "name": "Tarea de ejemplo",
       "deadline": "2024-10-01",
-      "completed": false,
       "persons": [
         {
-          "id": 1,
           "fullName": "Juan Pérez",
           "age": 30,
-          "skills": ["Angular", "TypeScript"]
+          "skills": [
+            "Angular",
+            "pepoto perez",
+            "sfdg sdfg",
+            "sdfg",
+            "sdfg s",
+            "dfg",
+            "sdf",
+            "g sdf",
+            "g"
+          ]
+        },
+        {
+          "fullName": "sdfgdfbgt",
+          "age": 45,
+          "skills": [
+            "fgsdfg",
+            "sdfg",
+            "sdf",
+            "g"
+          ]
+        }
+      ],
+      "id": "1"
+    },
+    {
+      "id": "7fe5",
+      "name": "sdfvsdfvsdfv",
+      "deadline": "2024-10-17T04:00:00.000Z",
+      "persons": [
+        {
+          "fullName": "sdvsdfvsdfv",
+          "age": 343,
+          "skills": [
+            "sdfvsf",
+            "sdfvsdfv"
+          ]
         }
       ]
     }

@@ -1,15 +1,23 @@
 <div class="p-4">
-  <div class="filter-buttons flex gap-4 mb-4">
-    <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="setFilter('all')">Todas</button>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="setFilter('completed')">Completadas</button>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="setFilter('pending')">Pendientes</button>
+  <div class="flex flex-row justify-between gap-4 mb-4">
+    <div class="flex gap-4 mb-4">
+      <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="setFilter('all')">Todas</button>
+      <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="setFilter('completed')">Completadas</button>
+      <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="setFilter('pending')">Pendientes</button>
+    </div>
+    <div>
+      <button class="bg-blue-500 text-white px-4 py-2 rounded" [routerLink]="['/create']"
+        routerLinkActive="router-link-active">Create</button>
+    </div>
   </div>
 
-  <div class="flex flex-col gap-4">
-    <div *ngFor="let task of filteredTasks" class="task-item p-4 border border-gray-300 rounded">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div *ngFor="let task of filteredTasks" class="p-4 border border-gray-300 rounded">
       <h3 class="text-lg font-semibold">{{ task.name }}</h3>
       <p>Fecha límite: {{ task.deadline }}</p>
-      <p>Estado: <span [ngClass]="{'text-green-500': task.completed, 'text-red-500': !task.completed}">{{ task.completed ? 'Completada' : 'Pendiente' }}</span></p>
+      <p>Estado: <span [ngClass]="{'text-green-500': task.completed, 'text-red-500': !task.completed}">{{ task.completed
+          ?
+          'Completada' : 'Pendiente' }}</span></p>
       <div class="persons mt-4">
         <h4 class="text-md font-medium">Personas asociadas:</h4>
         <ul class="list-disc list-inside">
@@ -17,6 +25,11 @@
             {{ person.fullName }} ({{ person.age }} años) - Habilidades: {{ person.skills.join(', ') }}
           </li>
         </ul>
+      </div>
+      <div class="flex w-full justify-end mt-2 gap-2">
+        <button class="bg-green-500 text-white px-4 py-2 rounded" (click)="onComplete()">Completar</button>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded" [routerLink]="['/edit',task.id]"
+          routerLinkActive="router-link-active">Editar</button>
       </div>
     </div>
   </div>

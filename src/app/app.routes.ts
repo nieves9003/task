@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { TaskListComponent } from './taskManager/task-list/task-list.component';
 import { TaskFormComponent } from './taskManager/task-form/task-form.component';
-import { PersonFormComponent } from './taskManager/person-form/person-form.component';
+import { TaskFormEditComponent } from './taskManager/task-form-edit/task-form-edit.component';
 
 export const routes: Routes = [
 
@@ -20,8 +20,8 @@ export const routes: Routes = [
         component: TaskFormComponent,
       },
       {
-        path: 'person',
-        component: PersonFormComponent,
+        path: 'edit/:id',
+        component: TaskFormEditComponent,
       },
     ]
   },
