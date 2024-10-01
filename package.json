@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"ng serve --open\" \"npm run start:api\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:task-manager": "node dist/task-manager/server/server.mjs"
+    "serve:ssr:task-manager": "node dist/task-manager/server/server.mjs",
+    "start:api": "json-server --watch db.json --port 3000"
   },
   "private": true,
   "dependencies": {
@@ -36,7 +37,9 @@
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
     "jasmine-core": "~5.1.0",
+    "json-server": "^1.0.0-beta.3",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",

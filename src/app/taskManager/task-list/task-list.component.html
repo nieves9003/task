@@ -1,1 +1,23 @@
-<p>task-list works!</p>
+<div class="p-4">
+  <div class="filter-buttons flex gap-4 mb-4">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="setFilter('all')">Todas</button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="setFilter('completed')">Completadas</button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="setFilter('pending')">Pendientes</button>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <div *ngFor="let task of filteredTasks" class="task-item p-4 border border-gray-300 rounded">
+      <h3 class="text-lg font-semibold">{{ task.name }}</h3>
+      <p>Fecha límite: {{ task.deadline }}</p>
+      <p>Estado: <span [ngClass]="{'text-green-500': task.completed, 'text-red-500': !task.completed}">{{ task.completed ? 'Completada' : 'Pendiente' }}</span></p>
+      <div class="persons mt-4">
+        <h4 class="text-md font-medium">Personas asociadas:</h4>
+        <ul class="list-disc list-inside">
+          <li *ngFor="let person of task.persons">
+            {{ person.fullName }} ({{ person.age }} años) - Habilidades: {{ person.skills.join(', ') }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

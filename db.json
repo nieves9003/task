@@ -1,0 +1,18 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "name": "Tarea de ejemplo",
+      "deadline": "2024-10-01",
+      "completed": false,
+      "persons": [
+        {
+          "id": 1,
+          "fullName": "Juan Pérez",
+          "age": 30,
+          "skills": ["Angular", "TypeScript"]
+        }
+      ]
+    }
+  ]
+}
